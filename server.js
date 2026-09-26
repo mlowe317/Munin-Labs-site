@@ -3,6 +3,7 @@
 // endpoints that back the "Schedule a demo" and "Contact" forms.
 
 import express from 'express';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -13,13 +14,30 @@ import { createRateLimiter } from './lib/rate-limit.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Serverless hosts (Vercel, Lambda, Cloud Run) have a read-only bundle and a
+// writable /tmp that does not survive between invocations. On those hosts the
+// JSONL files are a best-effort log only and NOTIFY_* is the real delivery path.
+function isServerless(env) {
+  return Boolean(env.VERCEL || env.AWS_LAMBDA_FUNCTION_NAME || env.K_SERVICE);
+}
+
+function resolveDataDir(env) {
+  if (env.DATA_DIR) return path.resolve(__dirname, env.DATA_DIR);
+  if (isServerless(env)) return path.join(os.tmpdir(), 'munin-labs-site');
+  return path.resolve(__dirname, 'data');
+}
+
 export function createApp({ env = process.env, logger = console } = {}) {
   const app = express();
-  const store = createStore(path.resolve(__dirname, env.DATA_DIR || 'data'));
+  const store = createStore(resolveDataDir(env));
   const notifier = createNotifier(env, { logger });
+  const serverless = isServerless(env);
 
   app.disable('x-powered-by');
+  // Behind a reverse proxy the client IP arrives in X-Forwarded-For. Vercel and
+  // similar hosts always front the app with one, so trust it there by default.
   if (env.TRUST_PROXY) app.set('trust proxy', env.TRUST_PROXY === 'true' ? 1 : env.TRUST_PROXY);
+  else if (serverless) app.set('trust proxy', 1);
 
   // Security headers. The site has no third-party scripts, so the CSP is tight.
   app.use((req, res, next) => {
@@ -56,16 +74,27 @@ export function createApp({ env = process.env, logger = console } = {}) {
     return async (req, res) => {
       const { data, errors } = validate(req.body);
       if (errors) return res.status(400).json({ ok: false, errors });
+      const entry = store.prepare(data);
+      let persisted = false;
       try {
-        const entry = await store.save(data);
+        await store.save(entry);
+        persisted = true;
         logger.info(`[submission] ${entry.type} ${entry.id} from ${entry.email}`);
-        // Fire and forget: the visitor should not wait on SMTP or a webhook.
-        notifier.notify(entry).catch((err) => logger.error('[notify]', err));
-        return res.status(201).json({ ok: true, id: entry.id });
       } catch (err) {
         logger.error('[submission] failed to persist:', err);
+      }
+
+      // Await delivery: on serverless hosts the function is frozen as soon as
+      // the response is sent, so a fire-and-forget webhook would never leave.
+      const delivered = await notifier.notify(entry);
+
+      if (!persisted && !delivered) {
         return res.status(500).json({ ok: false, error: 'We could not save your request. Please email us directly.' });
       }
+      if (!persisted || (serverless && !notifier.configured)) {
+        logger.error(`[submission] ${entry.id} was not durably stored; configure NOTIFY_WEBHOOK_URL or SMTP.`);
+      }
+      return res.status(201).json({ ok: true, id: entry.id });
     };
   }
 
@@ -95,9 +124,13 @@ export function createApp({ env = process.env, logger = console } = {}) {
   return app;
 }
 
+// Default export for serverless hosts that import the app as a request handler.
+const app = createApp();
+export default app;
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const port = Number(process.env.PORT || 3000);
-  createApp().listen(port, () => {
+  app.listen(port, () => {
     console.log(`Munin Labs site listening on http://localhost:${port}`);
   });
 }

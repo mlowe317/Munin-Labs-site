@@ -47,6 +47,8 @@ misbehaves.
 
 ```
 server.js            Express app: security headers, static files, form endpoints
+api/index.js         Vercel serverless entry point (re-exports the app)
+vercel.json          Vercel routing: static public/ first, then the app
 lib/validate.js      Field validation and allow-lists for both forms
 lib/store.js         Append-only JSONL storage
 lib/notify.js        Webhook and SMTP notifications
@@ -55,7 +57,7 @@ public/index.html    The site
 public/css/styles.css
 public/js/app.js     Mobile nav, inline validation, form submission
 public/404.html
-test/api.test.js     node:test suite
+test/                node:test suites (API, headers, serverless behaviour)
 ```
 
 ## Editing the content
@@ -79,6 +81,24 @@ before launch:
 - Submission files are created with owner-only permissions (`0600`).
 
 ## Deploying
+
+### Vercel
+
+The repository is ready to deploy on Vercel as-is: import the repo, keep the framework
+preset on "Other", and deploy. `vercel.json` serves `public/` from the CDN and routes
+everything else to the Express app in `api/index.js`.
+
+Vercel functions cannot write to the project directory, so on Vercel the JSONL files
+land in `/tmp` and are discarded when the function is recycled. **Set at least one
+notification channel in the project's environment variables** (`NOTIFY_WEBHOOK_URL`, or
+`NOTIFY_EMAIL` with the `SMTP_*` variables), otherwise demo requests will only ever
+appear in the function logs. A submission is acknowledged to the visitor once it is either
+written to disk or delivered to a configured channel.
+
+The per-IP rate limit is per function instance on Vercel, so it is a softer guard there.
+Enable Vercel's attack challenge mode or a WAF rule if the forms start attracting spam.
+
+### Long-running Node hosts
 
 Any host that runs Node works (Render, Fly.io, Railway, a VPS behind nginx or Caddy).
 Set `NODE_ENV=production` to enable static asset caching, set `TRUST_PROXY=true` behind
