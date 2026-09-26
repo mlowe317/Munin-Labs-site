@@ -84,9 +84,14 @@ before launch:
 
 ### Vercel
 
-The repository is ready to deploy on Vercel as-is: import the repo, keep the framework
-preset on "Other", and deploy. `vercel.json` serves `public/` from the CDN and routes
-everything else to the Express app in `api/index.js`.
+The repository is ready to deploy on Vercel as-is: import the repo and deploy. Vercel
+detects Express automatically. `public/` is served from the CDN and everything else is
+routed to the Express app through `api/index.js` (see `vercel.json`). The Node runtime is
+pinned to 22.x through `engines` in `package.json`; bump it deliberately after testing.
+
+Vercel deploys whatever commit is on the production branch. The dashboard's **Redeploy**
+button rebuilds the *same* commit, so after pushing a fix make sure the newest production
+deployment is the new commit, not a redeploy of the old one.
 
 Vercel functions cannot write to the project directory, so on Vercel the JSONL files
 land in `/tmp` and are discarded when the function is recycled. **Set at least one

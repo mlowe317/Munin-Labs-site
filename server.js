@@ -110,7 +110,12 @@ export function createApp({ env = process.env, logger = console } = {}) {
   );
 
   app.use('/api', (req, res) => res.status(404).json({ ok: false, error: 'Not found' }));
-  app.use((req, res) => res.status(404).sendFile(path.join(__dirname, 'public', '404.html')));
+  app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'), (err) => {
+      // The static 404 page may not be bundled on serverless hosts; never turn that into a 500.
+      if (err && !res.headersSent) res.status(404).type('text').send('Not found');
+    });
+  });
 
   // Malformed JSON and other errors.
   // eslint-disable-next-line no-unused-vars
