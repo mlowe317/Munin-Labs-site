@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Munin Labs · Secure OCR, AI Call Agents, and Secure Web Applications</title>
+  <meta name="description" content="Munin Labs builds the most secure OCR, the most capable and fastest go-to-market AI call agents, and the most secure web applications. Founded by an AI engineer with financial services experience.">
+  <meta property="og:title" content="Munin Labs">
+  <meta property="og:description" content="Security-first AI and software for organisations that cannot afford to get it wrong.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="#top" aria-label="Munin Labs home">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Munin<strong>Labs</strong></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="#services">Services</a>
+        <a href="#approach">Approach</a>
+        <a href="#founder">Founder</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-primary btn-sm" href="#demo">Schedule a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section id="top" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Security-first AI &amp; software</p>
+          <h1>Built for organisations that cannot afford to get it wrong.</h1>
+          <p class="lede">
+            Munin Labs delivers the most secure OCR, the most capable and fastest go-to-market AI call agents,
+            and the most secure web application development. Engineered with the rigour of financial services,
+            shipped at startup speed.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#demo">Schedule a tailored demo</a>
+            <a class="btn btn-ghost" href="#contact">Contact us</a>
+          </div>
+          <ul class="hero-points" aria-label="Key commitments">
+            <li>Your data stays in your environment</li>
+            <li>Encryption, audit trails and least privilege by default</li>
+            <li>Priced on the work we do, not on the savings you make</li>
+          </ul>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="panel">
+            <div class="panel-head">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="panel-title">munin-ocr · audit log</span>
+            </div>
+            <pre class="panel-body"><code><span class="c-muted">12:04:31</span> <span class="c-ok">INGEST</span>   statement_q3.pdf  <span class="c-muted">sha256 verified</span>
+<span class="c-muted">12:04:31</span> <span class="c-ok">ENCRYPT</span>  AES-256-GCM  <span class="c-muted">key: customer-managed</span>
+<span class="c-muted">12:04:32</span> <span class="c-ok">OCR</span>      14 pages · 2,318 fields · 99.6% conf
+<span class="c-muted">12:04:32</span> <span class="c-warn">REDACT</span>   7 PII spans masked
+<span class="c-muted">12:04:32</span> <span class="c-ok">EXPORT</span>   structured JSON → your VPC
+<span class="c-muted">12:04:33</span> <span class="c-ok">PURGE</span>    source document · zero retention</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust strip -->
+    <section class="strip" aria-label="Where we work">
+      <div class="container strip-row">
+        <span>Designed for regulated environments:</span>
+        <ul>
+          <li>Financial services</li>
+          <li>Insurance</li>
+          <li>Healthcare</li>
+          <li>Legal</li>
+          <li>Public sector</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <div class="container">
+        <p class="eyebrow">What we do</p>
+        <h2>Three things. Done to the highest standard.</h2>
+        <p class="lede narrow">Each offering is built on the same foundation: threat modelling before the first line of code, defence in depth, and full auditability.</p>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><rect x="7" y="8" width="10" height="8" rx="1"/><path d="M9 12h6"/></svg>
+            </div>
+            <h3>Secure OCR</h3>
+            <p class="card-tag">The most secure OCR.</p>
+            <p>Turn statements, KYC documents, invoices, claims and contracts into structured data without your documents ever leaving your control.</p>
+            <ul class="checks">
+              <li>Deploys on-premises or inside your own cloud account</li>
+              <li>Zero-retention mode: sources purged the moment extraction completes</li>
+              <li>Customer-managed encryption keys, in transit and at rest</li>
+              <li>Built-in PII detection and redaction</li>
+              <li>Field-level confidence scores and a tamper-evident audit log</li>
+              <li>Tuned for financial documents and handwritten forms</li>
+            </ul>
+            <a class="text-link" href="#demo" data-service="ocr">Request an OCR demo →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/><path d="M15 3a6 6 0 0 1 6 6M15 7a2 2 0 0 1 2 2"/></svg>
+            </div>
+            <h3>AI Call Agents</h3>
+            <p class="card-tag">The most capable agents. The fastest go-to-market.</p>
+            <p>Inbound and outbound voice agents that handle real conversations, follow your compliance rules, and go live in days rather than quarters.</p>
+            <ul class="checks">
+              <li>Live on your phone numbers in days, with your scripts and your guardrails</li>
+              <li>Natural, low-latency conversation with interruption handling</li>
+              <li>Consent, recording and disclosure rules enforced on every call</li>
+              <li>Warm hand-off to a human with full context</li>
+              <li>Integrates with your CRM, ticketing and telephony</li>
+              <li>Transcripts, summaries and QA scoring for every call</li>
+            </ul>
+            <a class="text-link" href="#demo" data-service="call-agents">Hear an agent live →</a>
+          </article>
+
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3>Secure Web Application Development</h3>
+            <p class="card-tag">The most secure web application development.</p>
+            <p>Customer portals, internal tools and platforms built the way a bank would want them built, without the bank's timelines.</p>
+            <ul class="checks">
+              <li>Threat modelling and security requirements before design</li>
+              <li>OWASP ASVS-aligned engineering and code review</li>
+              <li>SSO, MFA, role-based access and least privilege from day one</li>
+              <li>Secrets management, dependency scanning and signed builds</li>
+              <li>Penetration-test ready, with remediation included</li>
+              <li>Documentation your auditors will actually read</li>
+            </ul>
+            <a class="text-link" href="#demo" data-service="web-apps">Scope a build →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section id="approach" class="section section-alt">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">How we work</p>
+          <h2>Security is the default, not the upsell.</h2>
+          <p class="lede">
+            Most vendors treat security as a tier you pay extra for. We treat it as the starting point.
+            Every engagement, whatever its size, gets the same controls.
+          </p>
+        </div>
+        <ol class="steps">
+          <li>
+            <h3>Understand the risk</h3>
+            <p>We start with your data, your regulators and your worst-case scenario. That shapes the architecture before anything is built.</p>
+          </li>
+          <li>
+            <h3>Build inside your perimeter</h3>
+            <p>On-premises, in your VPC, or in an isolated tenant. You own the keys, the logs and the data.</p>
+          </li>
+          <li>
+            <h3>Ship fast, prove it works</h3>
+            <p>Short, measurable milestones. You see working software early and often, with evidence at every step.</p>
+          </li>
+          <li>
+            <h3>Hand over, or stay on</h3>
+            <p>Full documentation and runbooks so your team can run it. Or we run it for you under a clear service agreement.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Founder -->
+    <section id="founder" class="section">
+      <div class="container founder">
+        <div class="founder-mark" aria-hidden="true">
+          <img src="/img/logo.svg" alt="" width="120" height="120">
+        </div>
+        <div>
+          <p class="eyebrow">Founder</p>
+          <h2>Built by an AI engineer from financial services.</h2>
+          <p class="lede">
+            Munin Labs was founded by an AI engineer who spent years building and securing systems inside the
+            financial services industry, where every model, every document and every customer conversation is
+            subject to audit.
+          </p>
+          <p>
+            That background is the whole point. We know what compliance, risk and security teams will ask before
+            they ask it, and we design for those questions from the first conversation. The result is AI that a
+            regulated business can actually deploy, not just pilot.
+          </p>
+          <p class="muted small">
+            Named after Munin, the raven of memory in Norse legend: the one that returns each day with everything it has seen, and forgets nothing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section section-alt">
+      <div class="container">
+        <p class="eyebrow">Pricing</p>
+        <h2>Priced on the work. Not on your savings.</h2>
+        <p class="lede narrow">
+          Many AI vendors price as a share of the savings or revenue they project for you. We do not. Our pricing
+          reflects the scope, complexity and effort of the work we actually do, so the value it creates stays with you.
+        </p>
+
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>Fixed-scope projects</h3>
+            <p>A defined deliverable, a defined price. OCR deployments, agent launches and application builds with a clear specification.</p>
+            <ul class="checks">
+              <li>Quote based on scope and engineering effort</li>
+              <li>Milestone-based payments</li>
+              <li>No percentage of savings, ever</li>
+            </ul>
+          </article>
+          <article class="price-card featured">
+            <p class="badge">Most common</p>
+            <h3>Managed service</h3>
+            <p>We run and improve your OCR pipeline or call agents for you. A flat monthly fee covering infrastructure, monitoring and support.</p>
+            <ul class="checks">
+              <li>Priced on volume handled and support level</li>
+              <li>Security patching and model updates included</li>
+              <li>Cancel with notice, no lock-in</li>
+            </ul>
+          </article>
+          <article class="price-card">
+            <h3>Engineering retainer</h3>
+            <p>Reserved capacity from our team for ongoing development, security reviews and advisory work.</p>
+            <ul class="checks">
+              <li>Priced on reserved hours per month</li>
+              <li>Roll-over of unused time within the quarter</li>
+              <li>Priority response</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="pricing-principles">
+          <h3>Our pricing principles</h3>
+          <ul>
+            <li><strong>Value for work done.</strong> You pay for the engineering, infrastructure and expertise delivered, at a rate that is fair for that work.</li>
+            <li><strong>Your upside is yours.</strong> If our OCR saves you millions or our agents double your conversions, that result belongs to you.</li>
+            <li><strong>No hidden tiers.</strong> Security controls, audit logging and encryption are in every engagement, never an add-on.</li>
+            <li><strong>Written quotes.</strong> Every proposal itemises what is being built and what it costs before you commit.</li>
+          </ul>
+          <p><a class="btn btn-primary" href="#demo">Get a tailored quote with your demo</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" class="section">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Schedule a demo</p>
+          <h2>See it working on your documents, your calls, your requirements.</h2>
+          <p class="lede">
+            Every demo is tailored. Tell us which services interest you and what you are trying to solve, and we will
+            prepare a session around your use case rather than a generic slide deck.
+          </p>
+          <ul class="checks">
+            <li>45 minutes, remote, with an engineer not a salesperson</li>
+            <li>Bring sample documents or call scenarios (NDA available)</li>
+            <li>Leave with a written summary and indicative pricing</li>
+          </ul>
+        </div>
+
+        <form id="demo-form" class="form" novalidate>
+          <div class="form-row two">
+            <label>
+              <span>Full name <em>*</em></span>
+              <input type="text" name="name" autocomplete="name" required maxlength="120">
+            </label>
+            <label>
+              <span>Work email <em>*</em></span>
+              <input type="email" name="email" autocomplete="email" required maxlength="254">
+            </label>
+          </div>
+          <div class="form-row two">
+            <label>
+              <span>Company <em>*</em></span>
+              <input type="text" name="company" autocomplete="organization" required maxlength="160">
+            </label>
+            <label>
+              <span>Role</span>
+              <input type="text" name="role" autocomplete="organization-title" maxlength="120">
+            </label>
+          </div>
+
+          <fieldset class="form-row">
+            <legend>Which services interest you? <em>*</em></legend>
+            <div class="chip-group">
+              <label class="chip"><input type="checkbox" name="services" value="ocr"><span>Secure OCR</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="call-agents"><span>AI Call Agents</span></label>
+              <label class="chip"><input type="checkbox" name="services" value="web-apps"><span>Secure Web Apps</span></label>
+            </div>
+          </fieldset>
+
+          <div class="form-row three">
+            <label>
+              <span>Preferred date <em>*</em></span>
+              <input type="date" name="preferredDate" required>
+            </label>
+            <label>
+              <span>Time window <em>*</em></span>
+              <select name="timeWindow" required>
+                <option value="">Select…</option>
+                <option value="morning">Morning (9–12)</option>
+                <option value="midday">Midday (12–2)</option>
+                <option value="afternoon">Afternoon (2–5)</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </label>
+            <label>
+              <span>Timezone</span>
+              <input type="text" name="timezone" maxlength="80" placeholder="e.g. America/New_York">
+            </label>
+          </div>
+
+          <label class="form-row">
+            <span>What would you like to see?</span>
+            <textarea name="notes" rows="4" maxlength="2000" placeholder="Document types, call scenarios, integrations, compliance requirements…"></textarea>
+          </label>
+
+          <!-- Honeypot: hidden from people, filled by bots -->
+          <label class="hp" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Request my demo</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+          <p class="small muted">We use your details only to arrange the demo. No mailing lists, no resale.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section section-alt">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Talk to us.</h2>
+          <p class="lede">Questions about security posture, procurement, partnerships or anything else. We reply within one business day.</p>
+          <dl class="contact-details">
+            <div><dt>Email</dt><dd><a href="mailto:hello@muninlabs.com">hello@muninlabs.com</a></dd></div>
+            <div><dt>Security disclosures</dt><dd><a href="mailto:security@muninlabs.com">security@muninlabs.com</a></dd></div>
+            <div><dt>Hours</dt><dd>Monday to Friday, 9am to 6pm</dd></div>
+          </dl>
+        </div>
+
+        <form id="contact-form" class="form" novalidate>
+          <div class="form-row two">
+            <label>
+              <span>Name <em>*</em></span>
+              <input type="text" name="name" autocomplete="name" required maxlength="120">
+            </label>
+            <label>
+              <span>Email <em>*</em></span>
+              <input type="email" name="email" autocomplete="email" required maxlength="254">
+            </label>
+          </div>
+          <div class="form-row two">
+            <label>
+              <span>Company</span>
+              <input type="text" name="company" autocomplete="organization" maxlength="160">
+            </label>
+            <label>
+              <span>Subject</span>
+              <input type="text" name="subject" maxlength="160">
+            </label>
+          </div>
+          <label class="form-row">
+            <span>Message <em>*</em></span>
+            <textarea name="message" rows="5" required minlength="10" maxlength="4000"></textarea>
+          </label>
+          <label class="hp" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Send message</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div class="brand small">
+        <img src="/img/logo.svg" alt="" width="28" height="28">
+        <span>Munin<strong>Labs</strong></span>
+      </div>
+      <p class="muted small">© <span id="year">2026</span> Munin Labs. Secure OCR · AI Call Agents · Secure Web Applications.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#demo">Demo</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
