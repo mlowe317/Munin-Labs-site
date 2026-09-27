@@ -143,11 +143,11 @@
         status.textContent = body.errors.form || 'Please fix the highlighted fields.';
       } else {
         status.className = 'form-status error';
-        status.textContent = body.error || 'Something went wrong. Please email hello@muninlabs.com.';
+        status.textContent = body.error || 'Something went wrong. Please email lowematthew7@gmail.com.';
       }
     } catch (_) {
       status.className = 'form-status error';
-      status.textContent = 'Network error. Please try again or email hello@muninlabs.com.';
+      status.textContent = 'Network error. Please try again or email lowematthew7@gmail.com.';
     } finally {
       button.disabled = false;
       if (status.textContent === 'Sending…') status.textContent = '';

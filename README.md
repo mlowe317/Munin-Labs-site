@@ -89,8 +89,8 @@ All copy lives in `public/index.html`. Things you will probably want to change
 before launch:
 
 - The founder section (`#founder`) is written without a name; add one if you want it public.
-- Contact email addresses in the `#contact` section and in `public/js/app.js` error messages
-  (`hello@muninlabs.com`, `security@muninlabs.com`).
+- Contact email address in the `#contact` section and in `public/js/app.js` error messages
+  (currently `lowematthew7@gmail.com`).
 - Demo length and business hours in the `#demo` and `#contact` sections.
 
 ## Security notes
