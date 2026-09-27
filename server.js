@@ -44,10 +44,12 @@ export function createApp({ env = process.env, logger = console } = {}) {
     res.set({
       'Content-Security-Policy': [
         "default-src 'self'",
-        "script-src 'self'",
+        // 'wasm-unsafe-eval' lets the free OCR page compile Tesseract's WebAssembly; it does not permit eval().
+        "script-src 'self' 'wasm-unsafe-eval'",
+        "worker-src 'self'",
         "style-src 'self' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com",
-        "img-src 'self' data:",
+        "img-src 'self' data: blob:",
         "connect-src 'self'",
         "form-action 'self'",
         "frame-ancestors 'none'",

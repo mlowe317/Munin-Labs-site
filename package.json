@@ -11,11 +11,17 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test \"test/**/*.test.js\""
+    "test": "node --test \"test/**/*.test.js\"",
+    "vendor": "node scripts/vendor.mjs"
   },
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^5.2.1",
     "nodemailer": "^10.0.10"
+  },
+  "devDependencies": {
+    "@tesseract.js-data/eng": "^1.0.0",
+    "pdfjs-dist": "^6.3.289",
+    "tesseract.js": "^7.0.0"
   }
 }

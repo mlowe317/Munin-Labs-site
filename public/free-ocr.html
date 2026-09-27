@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free OCR in your browser · Munin Labs</title>
+  <meta name="description" content="Free OCR that runs entirely in your browser. Drop an image or PDF, get copyable text. Nothing is uploaded: Tesseract runs locally via WebAssembly.">
+  <meta property="og:title" content="Free OCR in your browser · Munin Labs">
+  <meta property="og:description" content="Extract text from images and PDFs without uploading them anywhere.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="/" aria-label="Munin Labs home">
+        <img src="/img/logo.svg" alt="" width="36" height="36">
+        <span>Munin<strong>Labs</strong></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="/#services">Services</a>
+        <a href="/free-ocr" aria-current="page">Free OCR</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#contact">Contact</a>
+        <a class="btn btn-primary btn-sm" href="/#demo">Schedule a demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero hero-compact">
+      <div class="container">
+        <p class="eyebrow">Free tool</p>
+        <h1>Free OCR that never uploads your document.</h1>
+        <p class="lede narrow">
+          Drop an image or PDF and get the text back, ready to copy. The OCR engine runs inside your browser
+          using Tesseract compiled to WebAssembly. Your file is not sent to Munin Labs or anyone else.
+        </p>
+        <ul class="hero-points" aria-label="How it works">
+          <li>Runs 100% locally. Works offline once the engine has loaded.</li>
+          <li>PNG, JPG, WEBP, GIF, BMP and PDF (scanned or text) up to 25 MB</li>
+          <li>No account, no limits, no watermarks. English text.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section ocr-section">
+      <div class="container ocr-app">
+        <div class="ocr-input">
+          <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Choose or drop a file to extract text from">
+            <input id="file-input" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,application/pdf,.png,.jpg,.jpeg,.webp,.gif,.bmp,.pdf" multiple hidden>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <p class="dropzone-title">Drop a file here or <span class="text-link">browse</span></p>
+            <p class="dropzone-hint">Images or PDFs. Several at once is fine.</p>
+          </div>
+
+          <div id="preview" class="preview" hidden>
+            <img id="preview-img" alt="Preview of the selected document">
+            <p id="preview-name" class="small muted"></p>
+          </div>
+
+          <div id="progress" class="progress" hidden>
+            <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+            <p id="progress-text" class="small muted" role="status" aria-live="polite">Preparing…</p>
+          </div>
+
+          <p id="ocr-error" class="field-error" role="alert" hidden></p>
+
+          <div class="ocr-notes small muted">
+            <p>First use downloads the OCR engine and English model (about 7 MB). They are cached for next time.</p>
+            <p>Tip: for best results use a sharp, well-lit image with text at least 20 pixels tall.</p>
+          </div>
+        </div>
+
+        <div class="ocr-output">
+          <div class="toolbar">
+            <h2 class="toolbar-title">Extracted text</h2>
+            <div class="toolbar-actions">
+              <button id="copy-btn" class="btn btn-primary btn-sm" type="button" disabled>Copy text</button>
+              <button id="download-btn" class="btn btn-ghost btn-sm" type="button" disabled>Download .txt</button>
+              <button id="clear-btn" class="btn btn-ghost btn-sm" type="button" disabled>Clear</button>
+            </div>
+          </div>
+          <textarea id="result" class="result" spellcheck="false" placeholder="Extracted text will appear here. You can edit it before copying." aria-label="Extracted text"></textarea>
+          <p id="result-meta" class="small muted result-meta" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">Need more than free?</p>
+          <h2>This tool is Tesseract. Our product is what banks use it for.</h2>
+          <p class="lede">
+            The free tool is great for the odd receipt or scanned letter. Secure OCR from Munin Labs is built for
+            volume, accuracy and audit: statements, KYC documents, claims and contracts, processed inside your own
+            environment.
+          </p>
+        </div>
+        <ul class="checks">
+          <li>Structured JSON output with field-level confidence, not just raw text</li>
+          <li>Handwriting, low-quality scans and multi-language documents</li>
+          <li>Deploys on-premises or in your VPC with customer-managed keys</li>
+          <li>Built-in PII detection and redaction, tamper-evident audit log</li>
+          <li>Batch and API processing at thousands of pages an hour</li>
+          <li><a href="/#demo">Schedule a tailored demo →</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div class="brand small">
+        <img src="/img/logo.svg" alt="" width="28" height="28">
+        <span>Munin<strong>Labs</strong></span>
+      </div>
+      <p class="muted small">© <span id="year">2026</span> Munin Labs. Free OCR powered by <a href="https://github.com/naptha/tesseract.js" rel="noopener">Tesseract.js</a> and <a href="https://mozilla.github.io/pdf.js/" rel="noopener">pdf.js</a>, both Apache-2.0.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/#services">Services</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#demo">Demo</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/js/app.js" defer></script>
+  <script src="/vendor/tesseract/tesseract.min.js" defer></script>
+  <script type="module" src="/js/ocr.js"></script>
+</body>
+</html>

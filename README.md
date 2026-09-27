@@ -3,8 +3,8 @@
 Company website for **Munin Labs**: the most secure OCR, the most capable and fastest
 go-to-market AI call agents, and the most secure web application development.
 
-The site is a single static page served by a small Node/Express app. The app also
-backs the two forms on the page:
+The site is a static marketing page served by a small Node/Express app, plus a
+free in-browser OCR tool at `/free-ocr`. The app backs the two forms on the homepage:
 
 - **Schedule a tailored demo** (`POST /api/demo`)
 - **Contact us** (`POST /api/contact`)
@@ -23,6 +23,25 @@ npm start          # http://localhost:3000
 npm run dev        # restarts on file changes
 npm test           # API and security-header tests
 ```
+
+## Free OCR page
+
+`/free-ocr` runs [Tesseract.js](https://github.com/naptha/tesseract.js) entirely in the
+visitor's browser. Nothing is uploaded: the WebAssembly engine, the English model and
+[pdf.js](https://mozilla.github.io/pdf.js/) (used to rasterise PDF pages) are all served from
+`public/vendor/`, so the page works under the site's same-origin Content Security Policy
+and keeps working offline once cached.
+
+The vendored files are copied from `node_modules` by `npm run vendor` (see
+`scripts/vendor.mjs`) and committed. After upgrading `tesseract.js`, `tesseract.js-core`,
+`@tesseract.js-data/eng` or `pdfjs-dist`, run the script again and commit the result. A
+test compares `public/vendor/VERSIONS.json` with the installed versions so a stale copy
+fails the suite.
+
+Only the two LSTM cores (SIMD and a non-SIMD fallback) and the quantised "best" English
+model are shipped. To add languages, copy the matching `<lang>.traineddata.gz` from an
+`@tesseract.js-data/<lang>` package into `public/vendor/tesseract/lang/` and add the option
+in `public/js/ocr.js`.
 
 ## Configuration
 
@@ -54,8 +73,12 @@ lib/store.js         Append-only JSONL storage
 lib/notify.js        Webhook and SMTP notifications
 lib/rate-limit.js    Per-IP rate limiting for the form endpoints
 public/index.html    The site
+public/free-ocr.html Free in-browser OCR tool
 public/css/styles.css
 public/js/app.js     Mobile nav, inline validation, form submission
+public/js/ocr.js     Browser OCR: Tesseract worker, PDF rasterising, copy/download
+public/vendor/       Self-hosted Tesseract.js, cores, English model, pdf.js (npm run vendor)
+scripts/vendor.mjs   Copies the OCR dependencies from node_modules into public/vendor
 public/404.html
 test/                node:test suites (API, headers, serverless behaviour)
 ```
@@ -73,7 +96,9 @@ before launch:
 ## Security notes
 
 - Strict Content Security Policy: scripts and connections are same-origin only; the
-  only external resources are Google Fonts stylesheets and fonts.
+  only external resources are Google Fonts stylesheets and fonts. `'wasm-unsafe-eval'` is
+  allowed so the free OCR page can compile WebAssembly; it does not permit `eval()`.
+- The same headers are applied to CDN-served static files on Vercel through `vercel.json`.
 - `X-Frame-Options: DENY`, `nosniff`, referrer and permissions policies on every response,
   and HSTS when served over HTTPS.
 - JSON bodies are capped at 32 KB. Every field is length-limited and allow-listed.
