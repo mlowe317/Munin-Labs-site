@@ -107,7 +107,13 @@ export function createApp({ env = process.env, logger = console } = {}) {
   app.use(
     express.static(path.join(__dirname, 'public'), {
       extensions: ['html'],
-      maxAge: env.NODE_ENV === 'production' ? '1h' : 0,
+      setHeaders(res, filePath) {
+        // HTML must always revalidate so content changes show up immediately;
+        // vendored OCR assets are versioned by content and can be cached for a year.
+        if (filePath.endsWith('.html')) res.set('Cache-Control', 'public, max-age=0, must-revalidate');
+        else if (filePath.includes(`${path.sep}vendor${path.sep}`)) res.set('Cache-Control', 'public, max-age=31536000, immutable');
+        else res.set('Cache-Control', env.NODE_ENV === 'production' ? 'public, max-age=3600' : 'no-cache');
+      },
     }),
   );
 

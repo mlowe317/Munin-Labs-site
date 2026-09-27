@@ -72,3 +72,12 @@ test('the English model is a gzip file', async () => {
   assert.equal(buf[0], 0x1f);
   assert.equal(buf[1], 0x8b);
 });
+
+test('HTML always revalidates while vendored assets are immutable', async () => {
+  const html = await fetch(`${base}/free-ocr`);
+  assert.equal(html.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+  const home = await fetch(`${base}/`);
+  assert.equal(home.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
+  const asset = await fetch(`${base}/vendor/tesseract/tesseract.min.js`, { method: 'HEAD' });
+  assert.equal(asset.headers.get('cache-control'), 'public, max-age=31536000, immutable');
+});
