@@ -112,6 +112,7 @@ export function createApp({ env = process.env, logger = console } = {}) {
         // vendored OCR assets are versioned by content and can be cached for a year.
         if (filePath.endsWith('.html')) res.set('Cache-Control', 'public, max-age=0, must-revalidate');
         else if (filePath.includes(`${path.sep}vendor${path.sep}`)) res.set('Cache-Control', 'public, max-age=31536000, immutable');
+        else if (filePath.includes(`${path.sep}media${path.sep}`)) res.set('Cache-Control', 'public, max-age=86400');
         else res.set('Cache-Control', env.NODE_ENV === 'production' ? 'public, max-age=3600' : 'no-cache');
       },
     }),

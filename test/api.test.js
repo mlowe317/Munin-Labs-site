@@ -125,3 +125,17 @@ test('unknown API routes return JSON 404', async () => {
   assert.equal(res.status, 404);
   assert.equal((await res.json()).ok, false);
 });
+
+test('serves the intro video with range support and its poster', async () => {
+  const video = await fetch(base + '/media/munin-labs.mp4', { headers: { Range: 'bytes=0-1023' } });
+  assert.equal(video.status, 206);
+  assert.match(video.headers.get('content-type'), /video\/mp4/);
+  assert.equal(video.headers.get('content-length'), '1024');
+  assert.equal(video.headers.get('cache-control'), 'public, max-age=86400');
+  const poster = await fetch(base + '/media/munin-labs-poster.jpg', { method: 'HEAD' });
+  assert.equal(poster.status, 200);
+  assert.match(poster.headers.get('content-type'), /image\/jpeg/);
+  const html = await (await fetch(base + '/')).text();
+  assert.match(html, /<video[^>]*poster="\/media\/munin-labs-poster\.jpg"/);
+  assert.match(html, /<source src="\/media\/munin-labs\.mp4" type="video\/mp4">/);
+});
