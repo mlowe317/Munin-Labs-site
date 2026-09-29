@@ -18,6 +18,62 @@
     });
   }
 
+  // Intro video banner: muted autoplay loop with opt-in sound, paused while
+  // off-screen, and left on its poster for people who prefer reduced motion.
+  const video = document.getElementById('intro-video');
+  if (video) {
+    const soundBtn = document.getElementById('intro-sound');
+    const pauseBtn = document.getElementById('intro-pause');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let userPaused = reduceMotion;
+    video.muted = true;
+
+    const tryPlay = () => {
+      if (userPaused) return;
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {});
+    };
+
+    if (reduceMotion) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      pauseBtn.setAttribute('aria-pressed', 'true');
+      pauseBtn.setAttribute('aria-label', 'Play video');
+    } else {
+      tryPlay();
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) tryPlay();
+          else video.pause();
+        });
+      }, { threshold: 0.15 }).observe(video);
+    }
+
+    soundBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      const on = !video.muted;
+      soundBtn.setAttribute('aria-pressed', String(on));
+      soundBtn.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+      if (on) {
+        userPaused = false;
+        pauseBtn.setAttribute('aria-pressed', 'false');
+        pauseBtn.setAttribute('aria-label', 'Pause video');
+        tryPlay();
+      }
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      userPaused = !video.paused;
+      if (userPaused) video.pause();
+      else tryPlay();
+      pauseBtn.setAttribute('aria-pressed', String(userPaused));
+      pauseBtn.setAttribute('aria-label', userPaused ? 'Play video' : 'Pause video');
+    });
+  }
+
   // Footer year
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());

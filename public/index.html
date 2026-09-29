@@ -96,18 +96,27 @@
       </div>
     </section>
 
-    <!-- Video -->
-    <section id="video" class="section video-section">
-      <div class="container">
+    <!-- Video banner -->
+    <section id="video" class="video-banner" aria-label="Munin Labs introduction">
+      <video id="intro-video" autoplay muted loop playsinline preload="auto" poster="/media/munin-labs-poster.jpg" aria-hidden="true" tabindex="-1">
+        <source src="/media/munin-labs.mp4" type="video/mp4">
+      </video>
+      <div class="video-banner-overlay"></div>
+      <div class="container video-banner-content">
         <p class="eyebrow">Munin Labs in ten seconds</p>
         <h2>Three services. One standard.</h2>
-        <p class="lede narrow">OCR, AI call agents and custom web applications, built with the rigour of financial services.</p>
-        <div class="video-frame">
-          <video controls preload="metadata" playsinline poster="/media/munin-labs-poster.jpg" aria-label="Munin Labs introduction video">
-            <source src="/media/munin-labs.mp4" type="video/mp4">
-            Your browser does not support embedded video. <a href="/media/munin-labs.mp4">Download the video</a> instead.
-          </video>
-        </div>
+        <p class="lede">OCR, AI call agents and custom web applications, built with the rigour of financial services.</p>
+      </div>
+      <div class="video-banner-controls">
+        <button id="intro-sound" class="banner-btn" type="button" aria-pressed="false" aria-label="Turn sound on">
+          <svg class="icon-muted" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+          <svg class="icon-sound" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/></svg>
+          <span>Sound</span>
+        </button>
+        <button id="intro-pause" class="banner-btn" type="button" aria-pressed="false" aria-label="Pause video">
+          <svg class="icon-pause" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          <svg class="icon-play" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
       </div>
     </section>
 

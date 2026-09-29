@@ -137,5 +137,6 @@ test('serves the intro video with range support and its poster', async () => {
   assert.match(poster.headers.get('content-type'), /image\/jpeg/);
   const html = await (await fetch(base + '/')).text();
   assert.match(html, /<video[^>]*poster="\/media\/munin-labs-poster\.jpg"/);
+  assert.match(html, /<video[^>]*\bautoplay\b[^>]*\bmuted\b[^>]*\bloop\b[^>]*\bplaysinline\b/);
   assert.match(html, /<source src="\/media\/munin-labs\.mp4" type="video\/mp4">/);
 });
