@@ -31,6 +31,8 @@ export function createApp({ env = process.env, logger = console } = {}) {
   const app = express();
   const store = createStore(resolveDataDir(env));
   const notifier = createNotifier(env, { logger });
+  if (notifier.configured) logger.info(`[notify] submissions go to ${notifier.recipient} via ${notifier.channels.join(', ')}`);
+  else logger.error('[notify] no notification channel configured; submissions are only written to disk. Set GMAIL_USER and GMAIL_APP_PASSWORD (or SMTP_*/NOTIFY_WEBHOOK_URL).');
   const serverless = isServerless(env);
 
   app.disable('x-powered-by');
@@ -100,7 +102,11 @@ export function createApp({ env = process.env, logger = console } = {}) {
     };
   }
 
-  app.get('/api/health', (req, res) => res.json({ ok: true, service: 'munin-labs-site' }));
+  // Health check also reports which notification channels are configured
+  // (never the credentials) so a deployment can be checked without sending a form.
+  app.get('/api/health', (req, res) =>
+    res.json({ ok: true, service: 'munin-labs-site', notifications: notifier.channels, recipient: notifier.configured ? notifier.recipient : null }),
+  );
   app.post('/api/demo', formLimiter, handleForm(validateDemo));
   app.post('/api/contact', formLimiter, handleForm(validateContact));
 

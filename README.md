@@ -49,18 +49,37 @@ Copy `.env.example` to `.env` (or set the variables in your host) and export the
 before starting the server. Everything is optional; with no configuration the site
 runs and stores submissions on disk.
 
+### Getting form submissions by email
+
+Every demo request and contact message is emailed to `NOTIFY_EMAIL`, which defaults
+to `lowematthew7@gmail.com`. Email is sent only when credentials are configured.
+
+**Gmail (two variables):**
+
+1. Turn on 2-Step Verification for the Google account.
+2. Create an App Password at <https://myaccount.google.com/apppasswords>.
+3. Set `GMAIL_USER` to the Gmail address and `GMAIL_APP_PASSWORD` to the 16-character
+   password (spaces are fine). On Vercel: Project → Settings → Environment Variables,
+   then redeploy.
+4. Check `/api/health`: it lists `"notifications": ["email:gmail"]` when the variables
+   are picked up. Then submit the contact form once to confirm delivery.
+
+Emails arrive with the visitor as reply-to, so replying from your inbox answers them
+directly.
+
 | Variable | Purpose |
 | --- | --- |
 | `PORT` | Port to listen on. Default `3000`. |
 | `DATA_DIR` | Directory for `demo-submissions.jsonl` and `contact-submissions.jsonl`. Default `./data`. |
 | `TRUST_PROXY` | Set to `true` (or a hop count) when behind a reverse proxy so rate limiting and HSTS see the real client. |
-| `NOTIFY_WEBHOOK_URL` | If set, every submission is POSTed as JSON to this URL (Slack, Zapier, Make, a CRM, ...). |
-| `NOTIFY_EMAIL` | If set together with `SMTP_HOST`, every submission is emailed here with the visitor as reply-to. |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | SMTP transport for the email notifier. |
+| `NOTIFY_EMAIL` | Recipient for submissions. Default `lowematthew7@gmail.com`. |
+| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | Send through Gmail. Easiest option. |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | Any other SMTP provider (used when `GMAIL_*` is not set). |
+| `NOTIFY_WEBHOOK_URL` | If set, every submission is also POSTed as JSON to this URL (Slack, Zapier, Make, a CRM, ...). |
 
-Submissions are always written to disk first, so a failed webhook or email never
-loses a lead. Check the JSONL files or the server log if a notification channel
-misbehaves.
+Submissions are always written to disk first where the filesystem allows it, so a
+failed email never loses a lead. Check the JSONL files or the server log if a
+notification channel misbehaves.
 
 ## Project layout
 
@@ -119,10 +138,9 @@ button rebuilds the *same* commit, so after pushing a fix make sure the newest p
 deployment is the new commit, not a redeploy of the old one.
 
 Vercel functions cannot write to the project directory, so on Vercel the JSONL files
-land in `/tmp` and are discarded when the function is recycled. **Set at least one
-notification channel in the project's environment variables** (`NOTIFY_WEBHOOK_URL`, or
-`NOTIFY_EMAIL` with the `SMTP_*` variables), otherwise demo requests will only ever
-appear in the function logs. A submission is acknowledged to the visitor once it is either
+land in `/tmp` and are discarded when the function is recycled. **Set `GMAIL_USER` and
+`GMAIL_APP_PASSWORD` (or another channel, see above) in the project's environment
+variables**, otherwise demo requests will only ever appear in the function logs. A submission is acknowledged to the visitor once it is either
 written to disk or delivered to a configured channel.
 
 The per-IP rate limit is per function instance on Vercel, so it is a softer guard there.

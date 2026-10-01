@@ -45,7 +45,11 @@ test('serves the homepage with security headers', async () => {
 
 test('health endpoint', async () => {
   const res = await fetch(base + '/api/health');
-  assert.deepEqual(await res.json(), { ok: true, service: 'munin-labs-site' });
+  const body = await res.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.service, 'munin-labs-site');
+  assert.deepEqual(body.notifications, []);
+  assert.equal(body.recipient, null);
 });
 
 test('accepts a valid demo request and persists it', async () => {
